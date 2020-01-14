@@ -1,6 +1,12 @@
 const express = require('express');
-
+const mongoose = require('mongoose')
 const app = express();
+
+mongoose.connect('mongodb+srv://evertonstm:evellyn1@oministack-7o1jy.mongodb.net/week10?retryWrites=true&w=majority',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+
 app.use(express.json())
 //Métodos
 // GET, buscando uma informação;
