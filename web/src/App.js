@@ -6,7 +6,11 @@ import React from 'react';
     */
 function App() {
   return (
-    <h1>Hello World</h1>
+    <div id="app">
+      <aside>
+        
+      </aside>
+    </div>
   );
 }
 
