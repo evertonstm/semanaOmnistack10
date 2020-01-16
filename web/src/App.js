@@ -1,12 +1,14 @@
 import React,{useState, useEffect} from 'react';
 import api from './services/api';
-import DevForm from './components/DevForm'
-import DevItem from './components/Devitem'
 
 import './global.css'
 import './App.css'
 import './Sidebar.css'
 import './Main.css'
+
+import DevForm from './components/DevForm';
+import DevItem from './components/Devitem';
+
 /* 
   Componente: Bloco isolado de HTML, CSS, JS, o qual não interfere no restante da aplicação;
   Propriedade: Informações que um componente PAI passa para o componente FILHO.
@@ -39,7 +41,7 @@ function App() {
 
       <main>
         <ul>
-          {devs.map(dev =>(
+          {devs.map(dev => (
             <DevItem key={dev._id} dev={dev} />
           ))}        
         </ul>
