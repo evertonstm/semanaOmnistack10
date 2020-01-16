@@ -11,9 +11,10 @@ import './Main.css'
   Estado; Informações mantidas pelo componente (Lembrar: Imutabilidade)
     */
 function App() {
+  const [devs, setDevs] = useState([]);
+
   const [github_username, setGithubUsername] = useState('');
   const [techs, setTechs] = useState('');
-
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
@@ -34,6 +35,15 @@ function App() {
     );
   },[]);
 
+  useEffect(() => {
+    async function loadDevs(){
+      const response = await api.get('/devs');
+      
+      setDevs(response.data);
+    }
+    loadDevs();
+  }, []);
+
   async function handleAddDev(e) {
     e.preventDefault();
     const response = await api.post('/devs', {
@@ -42,7 +52,9 @@ function App() {
       latitude,
       longitude,
     });
-    console.log(response.data);
+    setGithubUsername('');
+    setTechs('');
+    setDevs([...devs, response.data]);
   };
 
   return (
@@ -73,8 +85,8 @@ function App() {
           </div>
 
           <div className="input-group">
-            <div className="input-block">
-              <label htmlFor="latitude">Latitude</label>
+            <div class="input-block">
+            <label htmlFor="latitude">Latitude</label>
               <input
                type="number"
                name="latitude" 
@@ -83,7 +95,8 @@ function App() {
                value={latitude}
                onChange={e => setLatitude(e.target.value)}
                />
-          </div>
+            </div>
+          
 
           <div className="input-block">
               <label htmlFor="longitude">Longitude</label>
@@ -95,58 +108,26 @@ function App() {
                value={longitude}
                onChange={e => setLongitude(e.target.value)} />
           </div>
-        </div>
-     
+          </div> 
         <button type="submit">Salvar</button>
         </form>
       </aside>
 
       <main>
         <ul>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/22085525?v=4" alt="Everton Reis"/>
-              <div>
-                <strong>Everton Reis</strong>
-                <span>ReactJs, React Native, Node.JS</span>
-              </div>
-            </header>
-              <p>Biografia blblablalbalbalblalbalblalbalblablabl</p>
-              <a href="https://github.com/evertonstm/">Acessar perfil no Github</a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/22085525?v=4" alt="Everton Reis"/>
-              <div>
-                <strong>Everton Reis</strong>
-                <span>ReactJs, React Native, Node.JS</span>
-              </div>
-            </header>
-              <p>Biografia blblablalbalbalblalbalblalbalblablabl</p>
-              <a href="https://github.com/evertonstm/">Acessar perfil no Github</a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/22085525?v=4" alt="Everton Reis"/>
-              <div>
-                <strong>Everton Reis</strong>
-                <span>ReactJs, React Native, Node.JS</span>
-              </div>
-            </header>
-              <p>Biografia blblablalbalbalblalbalblalbalblablabl</p>
-              <a href="https://github.com/evertonstm/">Acessar perfil no Github</a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img src="https://avatars2.githubusercontent.com/u/22085525?v=4" alt="Everton Reis"/>
-              <div>
-                <strong>Everton Reis</strong>
-                <span>ReactJs, React Native, Node.JS</span>
-              </div>
-            </header>
-              <p>Biografia blblablalbalbalblalbalblalbalblablabl</p>
-              <a href="https://github.com/evertonstm/">Acessar perfil no Github</a>
-          </li>
+          {devs.map(dev =>(
+            <li key={dev._id} className="dev-item">
+              <header>
+                <img src={dev.avatar_url} alt={dev.name}/>
+                <div className="user-info">
+                  <strong>{dev.name}</strong>
+                  <span>{dev.techs.join(", ")}</span>
+                </div>
+              </header>
+                  <p>{dev.bio}</p>
+                  <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no Github</a>
+            </li>
+          ))}        
         </ul>
       </main>
       </div>
