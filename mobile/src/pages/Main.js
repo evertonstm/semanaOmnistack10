@@ -22,7 +22,7 @@ function Main() {
           longitude,
           latitudeDelta: 0.04,
           longitudeDelta: 0.04,
-        }) 
+        })
       }
     }
 
