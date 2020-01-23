@@ -124,12 +124,13 @@ const styles = StyleSheet.create({
   },
 
   loadButton:{
-    width:50,
-    height:50,
+    width: 50,
+    height: 50,
     backgroundColor:'#8e4dff',
-    borderRadius:25,
+    borderRadius: 25,
     justifyContent:'center',
-    alignItems: 15,
+    alignItems: 'center',
+    marginLeft: 15,
   },
 
 
